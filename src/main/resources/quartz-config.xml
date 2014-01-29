@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerName" value="helloScheduler"/>
+        <property name="triggers">
+            <list>
+                <bean id="pojoHelloTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+                    <property name="jobDetail" ref="pojoHelloJobDetail"/>
+                    <property name="cronExpression" value="0/5 * * * * ?"/>
+                </bean>
+                <bean id="helloTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+                    <property name="jobDetail" ref="helloJobDetail"/>
+                    <property name="cronExpression" value="0/7 * * * * ?"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!--config with POJO-->
+    <bean id="pojoHelloJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="hello"/>
+        <property name="targetMethod" value="sayHello"/>
+    </bean>
+
+    <!--configu with JobDetailBean-->
+    <bean id="helloJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.kiwi.quartz.HelloJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="hello" value-ref="hello"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="hello" class="org.kiwi.quartz.Hello"/>
+</beans>

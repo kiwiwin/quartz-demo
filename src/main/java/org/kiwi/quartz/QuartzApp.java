@@ -1,0 +1,9 @@
+package org.kiwi.quartz;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class QuartzApp {
+    public static void main(String[] args) {
+        new ClassPathXmlApplicationContext("quartz-config.xml");
+    }
+}

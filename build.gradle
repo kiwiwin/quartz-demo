@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+ext {
+    //quartz cannot use version 2.x.x
+    quartzVersion = "1.8.6"
+    springVersion = "4.0.0.RELEASE"
+}
+
+dependencies {
+    repositories {
+        mavenCentral()
+    }
+
+    compile(
+            "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-tx:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.quartz-scheduler:quartz:$quartzVersion"
+    )
+}
